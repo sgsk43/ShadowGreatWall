@@ -11,7 +11,8 @@
     <RootNamespace>ShadowGreatWall</RootNamespace>
     <AssemblyName>ShadowGreatWall</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -23,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -32,10 +34,20 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>NofityIcon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Win32Resource>
+    </Win32Resource>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,14 +58,89 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="Config\frmConfig.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Config\frmConfig.Designer.cs">
+      <DependentUpon>frmConfig.cs</DependentUpon>
     </Compile>
+    <Compile Include="Core\IPLib.cs" />
+    <Compile Include="Core\Reader\BigEdianReader.cs" />
+    <Compile Include="Core\Reader\BinaryReader.cs" />
+    <Compile Include="Core\Reader\IReader.cs" />
+    <Compile Include="Core\Reader\LittleEdianReader.cs" />
+    <Compile Include="Core\Utils.cs" />
+    <Compile Include="Encryption\EncryptionCenter.cs" />
+    <Compile Include="Encryption\Factory\DefaultFactory.cs" />
+    <Compile Include="Encryption\Factory\IEncryptionFactory.cs" />
+    <Compile Include="Encryption\Factory\MbedTLSFactory.cs" />
+    <Compile Include="Encryption\Factory\SodiumFactory.cs" />
+    <Compile Include="Servers\frmServerList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Servers\frmServerList.Designer.cs">
+      <DependentUpon>frmServerList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subscribe\frmSubscribeConfigDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subscribe\frmSubscribeConfigDialog.Designer.cs">
+      <DependentUpon>frmSubscribeConfigDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Core\Configuration.cs" />
+    <Compile Include="Core\Serializer\EnumSerializer.cs" />
+    <Compile Include="Core\Serializer\ISerializer.cs" />
+    <Compile Include="Core\Serializer\JsonSerializer.cs" />
+    <Compile Include="Core\Serializer\SerializerMgr.cs" />
+    <Compile Include="Core\Serializer\XmlSerializer.cs" />
+    <Compile Include="Subscribe\frmSubscribeConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subscribe\frmSubscribeConfig.Designer.cs">
+      <DependentUpon>frmSubscribeConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMain.Designer.cs">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IBaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IBaseForm.Designer.cs">
+      <DependentUpon>IBaseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Log\AppLog.cs" />
+    <Compile Include="Log\AppLogSaveService.cs" />
+    <Compile Include="Log\ByteConvertHelper.cs" />
+    <Compile Include="Log\IAppLog.cs" />
+    <Compile Include="Log\LogFileHelper.cs" />
+    <Compile Include="Log\LogInfo.cs" />
+    <Compile Include="Log\LogMsgHelper.cs" />
+    <Compile Include="Log\ServiceProxy.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup\StartupMgr.cs" />
+    <Compile Include="Subscribe\SubscribeUpdater.cs" />
+    <EmbeddedResource Include="Config\frmConfig.resx">
+      <DependentUpon>frmConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Servers\frmServerList.resx">
+      <DependentUpon>frmServerList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subscribe\frmSubscribeConfigDialog.resx">
+      <DependentUpon>frmSubscribeConfigDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subscribe\frmSubscribeConfig.resx">
+      <DependentUpon>frmSubscribeConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMain.resx">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IBaseForm.resx">
+      <DependentUpon>IBaseForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -62,7 +149,9 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -72,6 +161,16 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Resources\qqwry.dat" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="NofityIcon.ico" />
+    <None Include="Resources\edit.png" />
+    <None Include="Resources\delete.png" />
+    <None Include="Resources\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Encryption\Encryptor\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
