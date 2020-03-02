@@ -10,6 +10,7 @@ using System.Drawing.Imaging;
 using ShadowGreatWall.Startup;
 using ShadowGreatWall.Subscribe;
 using ShadowGreatWall.Config;
+using ShadowGreatWall.Servers;
 
 namespace ShadowGreatWall
 {
@@ -122,7 +123,8 @@ namespace ShadowGreatWall
 
         private void cmsiServerList_Click(object sender, EventArgs e)
         {
-
+            frmServerList frm = new frmServerList();
+            frm.ShowDialog();
         }  
     }
 }

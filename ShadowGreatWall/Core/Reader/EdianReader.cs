@@ -6,7 +6,7 @@ using System.IO;
 
 namespace ShadowGreatWall.Core.Reader
 {
-    abstract class EdianReader : IReader
+    class EdianReader : IReader
     {
         private Stream baseStream = null;
         private bool needToReverse = false;
@@ -89,49 +89,71 @@ namespace ShadowGreatWall.Core.Reader
             return (decimal)typeof(Decimal).GetMethod("ToDecimal", new Type[] { typeof(byte[]) }).Invoke(null, new object[] { ReadBuffer(0x10) });
         }
 
-        public double ReadDouble()
+        public unsafe double ReadDouble()
         {
-            throw new NotImplementedException();
+            byte[] buffer = ReadBuffer(8);
+            uint num = (uint)(((buffer[0] | (buffer[1] << 8)) | (buffer[2] << 0x10)) | (buffer[3] << 0x18));
+            uint num2 = (uint)(((buffer[4] | (buffer[5] << 8)) | (buffer[6] << 0x10)) | (buffer[7] << 0x18));
+            ulong num3 = (num2 << 0x20) | num;
+            return *(((double*)&num3));
         }
+
 
         public short ReadInt16()
         {
-            throw new NotImplementedException();
+            byte[] buffer = ReadBuffer(2);
+            return (short)(buffer[0] | (buffer[1] << 8));
         }
 
         public int ReadInt32()
         {
-            throw new NotImplementedException();
+            byte[] buffer = ReadBuffer(4);
+            return (((buffer[0] | (buffer[1] << 8)) | (buffer[2] << 0x10)) | (buffer[3] << 0x18));
         }
 
         public long ReadInt64()
         {
-            throw new NotImplementedException();
+            byte[] buffer = ReadBuffer(8);
+
+            uint num = (uint)(((buffer[0] | (buffer[1] << 8)) | (buffer[2] << 0x10)) | (buffer[3] << 0x18));
+            uint num2 = (uint)(((buffer[4] | (buffer[5] << 8)) | (buffer[6] << 0x10)) | (buffer[7] << 0x18));
+
+            return (long)((num2 << 0x20) | num);
         }
+
 
         public sbyte ReadSByte()
         {
-            throw new NotImplementedException();
+            byte[] buffer = ReadBuffer(1);
+            return (sbyte)buffer[0];
         }
 
-        public float ReadSingle()
+        public unsafe float ReadSingle()
         {
-            throw new NotImplementedException();
+            byte[] buffer = ReadBuffer(4);
+            uint num = (uint)(((buffer[0] | (buffer[1] << 8)) | (buffer[2] << 0x10)) | (buffer[3] << 0x18));
+            return *(((float*)&num));
+
         }
 
         public ushort ReadUInt16()
         {
-            throw new NotImplementedException();
+            byte[] buffer = ReadBuffer(2);
+            return (ushort)(buffer[0] | (buffer[1] << 8));
         }
 
         public uint ReadUInt32()
         {
-            throw new NotImplementedException();
+            byte[] buffer = ReadBuffer(4);
+            return (uint)(((buffer[0] | (buffer[1] << 8)) | (buffer[2] << 0x10)) | (buffer[3] << 0x18));
         }
 
         public ulong ReadUInt64()
         {
-            throw new NotImplementedException();
+            byte[] buffer = ReadBuffer(8);
+            uint num = (uint)(((buffer[0] | (buffer[1] << 8)) | (buffer[2] << 0x10)) | (buffer[3] << 0x18));
+            uint num2 = (uint)(((buffer[4] | (buffer[5] << 8)) | (buffer[6] << 0x10)) | (buffer[7] << 0x18));
+            return ((num2 << 0x20) | num);
         }
 
         private byte[] ReadBuffer(int count)
@@ -144,6 +166,20 @@ namespace ShadowGreatWall.Core.Reader
             }
 
             return ret;
+        }
+
+
+        public string ReadString()
+        {
+            StringBuilder builder = new StringBuilder();
+            
+            char data;
+            while ((data = this.ReadChar()) != 0)
+            {
+                builder.Append(data);
+            }
+
+            return builder.ToString();
         }
     }
 }

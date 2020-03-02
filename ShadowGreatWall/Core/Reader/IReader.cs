@@ -5,26 +5,27 @@ using System.Text;
 
 namespace ShadowGreatWall.Core.Reader
 {
-    interface IReader
+    public interface IReader
     {
         int PeekChar();
         int Read();
-        public virtual int Read(byte[] buffer, int index, int count);
-        public virtual int Read(char[] buffer, int index, int count);
-        public virtual bool ReadBoolean();
-        public virtual byte ReadByte();
-        public virtual byte[] ReadBytes(int count);
-        public virtual char ReadChar();
-        public virtual char[] ReadChars(int count);
-        public virtual decimal ReadDecimal();
-        public virtual double ReadDouble();
-        public virtual short ReadInt16();
-        public virtual int ReadInt32();
-        public virtual long ReadInt64();
-        public virtual sbyte ReadSByte();
-        public virtual float ReadSingle();
-        public virtual ushort ReadUInt16();
-        public virtual uint ReadUInt32();
-        public virtual ulong ReadUInt64();
+        int Read(byte[] buffer, int index, int count);
+        int Read(char[] buffer, int index, int count);
+        bool ReadBoolean();
+        byte ReadByte();
+        byte[] ReadBytes(int count);
+        char ReadChar();
+        char[] ReadChars(int count);
+        decimal ReadDecimal();
+        double ReadDouble();
+        short ReadInt16();
+        int ReadInt32();
+        long ReadInt64();
+        sbyte ReadSByte();
+        float ReadSingle();
+        ushort ReadUInt16();
+        uint ReadUInt32();
+        ulong ReadUInt64();
+        string ReadString();
     }
 }

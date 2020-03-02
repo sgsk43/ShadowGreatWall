@@ -28,8 +28,8 @@ namespace ShadowGreatWall.Core.Reader
             this.baseStream = input;
             this.baseEncoding = encoding;
 
-            this.littleEdianReader = new LittleEdianReader(this.baseStream);
-            this.bigEdianReader = new BigEdianReader(this.baseStream);
+            this.littleEdianReader = new EdianReader(this.baseStream, true);
+            this.bigEdianReader = new EdianReader(this.baseStream, false);
         }
         #endregion
 
@@ -54,6 +54,22 @@ namespace ShadowGreatWall.Core.Reader
                 {
                     return bigEdianReader;
                 }
+            }
+        }
+
+        public IReader LittleEdianReader
+        {
+            get
+            {
+                return this.littleEdianReader;
+            }
+        }
+
+        public IReader BigEdianReader
+        {
+            get
+            {
+                return this.bigEdianReader;
             }
         }
         #endregion
@@ -167,6 +183,12 @@ namespace ShadowGreatWall.Core.Reader
         public ulong ReadUInt64()
         {
             return DefaultReader.ReadUInt64();
+        }
+
+
+        public string ReadString()
+        {
+            return DefaultReader.ReadString();
         }
     }
 }

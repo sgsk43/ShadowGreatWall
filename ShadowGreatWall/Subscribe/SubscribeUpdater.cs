@@ -90,6 +90,8 @@ namespace ShadowGreatWall.Subscribe
                 ParseResponse(group, response);
 
                 AppLogProxy.AppLog.WriteLog<SubscribeUpdater>(string.Format("********** 结束更新 {0} **********", group.Name));
+
+                NotificationMgr.Instance.TryNotify(NotifycationType.SubscribeUpdated);
             }
             catch (Exception e)
             {
@@ -145,6 +147,7 @@ namespace ShadowGreatWall.Subscribe
                                 else
                                 {
                                     protocol = null;
+                                    server.GroupGuid = group.Guid;
                                     servers.Add(server);
                                 }
 
